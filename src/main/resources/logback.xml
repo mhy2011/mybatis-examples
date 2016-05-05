@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<configuration>
+	<appender name="STDOUT-APPENDER" class="ch.qos.logback.core.ConsoleAppender">  
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%t] [%c] [%m]%n</pattern>  
+        </layout>  
+    </appender>
+    
+    <logger name="com.mhy.mapper" additivity="false">
+    	<level value="DEBUG"></level>
+    	<appender-ref ref="STDOUT-APPENDER"/>
+    </logger>
+    
+	<root level="INFO">           
+	    <appender-ref ref="STDOUT-APPENDER"/>
+	</root>
+</configuration>
