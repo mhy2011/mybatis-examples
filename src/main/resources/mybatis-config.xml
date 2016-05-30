@@ -20,5 +20,6 @@
 	<mappers>
         <!-- 指定要用到的mapper文件 -->
         <mapper resource="mapper/StudentMapper.xml" />
+        <mapper resource="mapper/UserMapper.xml" />
     </mappers>
 </configuration>
