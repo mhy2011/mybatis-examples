@@ -41,4 +41,26 @@ public class UserMapperTest {
 		}
 	}
 	
+	@Test
+	public void testAdd2() {
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			User user = new User();
+			user.setUsername("mahaiyuan2016");
+			user.setPassword("111111");
+			user.setAddTime(new Date());
+			user.setLastLoginTime(new Date());
+			user.setLoginTimes(1);
+			int num = mapper.add(user);
+			session.commit();	//提交事务
+			System.out.println("user id = " + user.getId());
+			Assert.assertEquals(1, num);
+		} catch (Exception e) {
+			session.rollback();	//事务回滚
+		} finally {
+			session.close();
+		}
+	}
+	
 }
