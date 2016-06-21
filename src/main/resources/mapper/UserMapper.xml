@@ -44,4 +44,14 @@
 	    	<if test="loginTimes != 0">#{loginTimes,jdbcType=INTEGER},</if>
 	    </trim>
 	</insert>
+	
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO t_user 
+		(username, password, add_time, last_login_time, login_times)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(#{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=INTEGER}, #{item.addTime,jdbcType=TIMESTAMP},
+			#{item.lastLoginTime,jdbcType=TIMESTAMP}, #{item.loginTimes,jdbcType=INTEGER})
+		</foreach>
+	</insert>
 </mapper>

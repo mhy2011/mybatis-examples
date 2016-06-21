@@ -3,6 +3,8 @@
  */
 package com.mhy.mapper;
 
+import java.util.List;
+
 import com.mhy.model.User;
 
 /**
@@ -21,4 +23,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	int insertSelective(User user);
+	
+	/**
+	 * 批量插入
+	 * @param users	用户列表
+	 * @return
+	 */
+	int batchInsert(List<User> users);
 }

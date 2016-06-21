@@ -3,7 +3,9 @@
  */
 package com.mhy;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
@@ -83,4 +85,26 @@ public class UserMapperTest {
 		}
 	}
 	
+	@Test
+	public void testBatchInsert(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			List<User> users = new ArrayList<User>(5);
+			for(int i = 1; i < 6; i++){
+				User user = new User();
+				user.setUsername("用户" + i);
+				user.setPassword("111111");
+				user.setAddTime(new Date());
+				users.add(user);
+			}
+			int num = mapper.batchInsert(users);	//指插入
+			session.commit();	//提交事务
+			Assert.assertEquals(5, num);
+		} catch (Exception e) {
+			session.rollback();	//事务回滚
+		} finally {
+			session.close();
+		}
+	}
 }
