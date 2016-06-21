@@ -23,4 +23,25 @@
 		(#{username,jdbcType=VARCHAR}, #{password,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP},
 		#{lastLoginTime,jdbcType=TIMESTAMP}, #{loginTimes,jdbcType=INTEGER})
 	</insert>
+	
+	<insert id="insertSelective" parameterType="com.mhy.model.User">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+	      SELECT LAST_INSERT_ID()
+	    </selectKey>
+	    INSERT INTO t_user 
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	    	<if test="username != null">username,</if>
+	    	<if test="password != null">password,</if>
+	    	<if test="addTime != null">add_time,</if>
+	    	<if test="lastLoginTime != null">last_login_time,</if>
+	    	<if test="loginTimes != 0">login_times,</if>
+	    </trim>
+	    <trim prefix=" VALUES (" suffix=")" suffixOverrides=",">
+	    	<if test="username != null">#{username,jdbcType=VARCHAR},</if>
+	    	<if test="password != null">#{password,jdbcType=INTEGER},</if>
+	    	<if test="addTime != null">#{addTime,jdbcType=TIMESTAMP},</if>
+	    	<if test="lastLoginTime != null">#{lastLoginTime,jdbcType=TIMESTAMP},</if>
+	    	<if test="loginTimes != 0">#{loginTimes,jdbcType=INTEGER},</if>
+	    </trim>
+	</insert>
 </mapper>

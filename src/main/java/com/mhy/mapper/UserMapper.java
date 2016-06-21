@@ -14,4 +14,11 @@ import com.mhy.model.User;
 public interface UserMapper {
 
 	int add(User user);
+	
+	/**
+	 * 选择性插入数据
+	 * @param user	用户信息
+	 * @return
+	 */
+	int insertSelective(User user);
 }
