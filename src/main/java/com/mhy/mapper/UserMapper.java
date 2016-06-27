@@ -30,4 +30,18 @@ public interface UserMapper {
 	 * @return
 	 */
 	int batchInsert(List<User> users);
+	
+	/**
+	 * 更新操作
+	 * @param user	用户信息
+	 * @return
+	 */
+	int update(User user);
+	
+	/**
+	 * 更新指定的字段
+	 * @param user	用户信息
+	 * @return
+	 */
+	int updateColumn(User user);
 }

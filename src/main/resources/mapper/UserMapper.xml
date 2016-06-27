@@ -54,4 +54,22 @@
 			#{item.lastLoginTime,jdbcType=TIMESTAMP}, #{item.loginTimes,jdbcType=INTEGER})
 		</foreach>
 	</insert>
+	
+	<update id="update" parameterType="com.mhy.model.User">
+		UPDATE t_user SET username=#{username,jdbcType=VARCHAR},password=#{password,jdbcType=INTEGER}, 
+		add_time=#{addTime,jdbcType=TIMESTAMP},last_login_time=#{lastLoginTime,jdbcType=TIMESTAMP},
+		login_times=#{loginTimes,jdbcType=INTEGER} WHERE id=#{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateColumn" parameterType="com.mhy.model.User">
+		UPDATE t_user 
+		<set>
+			<if test="username != null">username=#{username,jdbcType=VARCHAR},</if>
+	    	<if test="password != null">password=#{password,jdbcType=INTEGER},</if>
+	    	<if test="addTime != null">add_time=#{addTime,jdbcType=TIMESTAMP},</if>
+	    	<if test="lastLoginTime != null">last_login_time=#{lastLoginTime,jdbcType=TIMESTAMP},</if>
+	    	<if test="loginTimes != 0">login_times=#{loginTimes,jdbcType=INTEGER},</if>
+		</set>
+		WHERE id=#{id,jdbcType=INTEGER}
+	</update>
 </mapper>

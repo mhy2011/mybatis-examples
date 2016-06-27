@@ -107,4 +107,49 @@ public class UserMapperTest {
 			session.close();
 		}
 	}
+	
+	@Test
+	public void testUpdate(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			User user = new User();
+			user.setId(20);
+			user.setAddTime(new Date());
+			user.setLastLoginTime(new Date());
+			user.setLoginTimes(10);
+			user.setPassword("123456");
+			user.setUsername("test_001");
+			int num = mapper.update(user);	//更新操作
+			session.commit();	//提交事务
+			Assert.assertEquals(1, num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();	//事务回滚
+		} finally {
+			session.close();
+		}
+	}
+	
+	
+	@Test
+	public void testUpdateColumn(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			User user = new User();
+			user.setId(20);
+			user.setLastLoginTime(new Date());
+			user.setLoginTimes(100);
+			user.setPassword("111111");
+			int num = mapper.updateColumn(user);	//更新操作
+			session.commit();	//提交事务
+			Assert.assertEquals(1, num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();	//事务回滚
+		} finally {
+			session.close();
+		}
+	}
 }
