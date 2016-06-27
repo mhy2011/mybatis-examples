@@ -72,4 +72,18 @@
 		</set>
 		WHERE id=#{id,jdbcType=INTEGER}
 	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM t_user WHERE id=#{id,jdbcType=INTEGER}
+	</delete>
+	
+	<!-- <delete id="deleteWithParam" parameterType="com.mhy.model.User">
+		DELETE FROM t_user 
+		<where>
+			<if test="username != null">username=#{username,jdbcType=VARCHAR}</if>
+			<if test="password != null"> AND password=#{password,jdbcType=INTEGER}</if>
+			<if test="addTime != null"> AND add_time=#{addTime,jdbcType=TIMESTAMP}</if>
+			<if test="lastLoginTime != null"> AND last_login_time=#{lastLoginTime,jdbcType=TIMESTAMP}</if>
+		</where>
+	</delete> -->
 </mapper>

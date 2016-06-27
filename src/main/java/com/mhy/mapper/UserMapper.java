@@ -44,4 +44,11 @@ public interface UserMapper {
 	 * @return
 	 */
 	int updateColumn(User user);
+	
+	/**
+	 * 删除指定id的用户信息
+	 * @param id
+	 * @return
+	 */
+	int delete(int id);
 }

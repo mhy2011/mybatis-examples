@@ -152,4 +152,21 @@ public class UserMapperTest {
 			session.close();
 		}
 	}
+	
+	@Test
+	public void testDelete(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			int id = 20;
+			int num = mapper.delete(id);
+			session.commit();	//提交事务
+			Assert.assertEquals(1, num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();	//事务回滚
+		} finally {
+			session.close();
+		}
+	}
 }
