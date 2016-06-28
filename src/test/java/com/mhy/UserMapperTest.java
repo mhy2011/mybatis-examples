@@ -169,4 +169,35 @@ public class UserMapperTest {
 			session.close();
 		}
 	}
+	
+	@Test
+	public void testGet(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			int id = 3;
+			User user = mapper.get(id);
+			Assert.assertEquals(id, user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
+	@Test
+	public void testGetList(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			User user = new User();
+			user.setUsername("用户1");
+			List<User> userList = mapper.getList(user);
+			Assert.assertNotNull(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 }

@@ -86,4 +86,20 @@
 			<if test="lastLoginTime != null"> AND last_login_time=#{lastLoginTime,jdbcType=TIMESTAMP}</if>
 		</where>
 	</delete> -->
+	
+	<sql id="Column_List">id, username, password, add_time, last_login_time, login_times</sql>
+	<select id="get" parameterType="int" resultMap="User">
+		SELECT <include refid="Column_List"></include> FROM t_user WHERE id=#{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getList" parameterType="com.mhy.model.User" resultMap="User">
+		SELECT <include refid="Column_List"></include> FROM t_user 
+		<where>
+			<if test="username != null">username=#{username,jdbcType=VARCHAR}</if>
+			<if test="password != null"> AND password=#{password,jdbcType=INTEGER}</if>
+			<if test="addTime != null"> AND add_time=#{addTime,jdbcType=TIMESTAMP}</if>
+			<if test="lastLoginTime != null"> AND last_login_time=#{lastLoginTime,jdbcType=TIMESTAMP}</if>
+		</where>
+	</select>
+	
 </mapper>

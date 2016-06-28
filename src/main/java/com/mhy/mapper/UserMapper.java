@@ -51,4 +51,18 @@ public interface UserMapper {
 	 * @return
 	 */
 	int delete(int id);
+	
+	/**
+	 * 通过主键获取用户信息
+	 * @param id
+	 * @return
+	 */
+	User get(int id);
+	
+	/**
+	 * 批量获取用户
+	 * @param user
+	 * @return
+	 */
+	List<User> getList(User user);
 }
