@@ -200,4 +200,21 @@ public class UserMapperTest {
 			session.close();
 		}
 	}
+	
+	@Test
+	public void testGetWithChoose(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			User user = new User();
+			user.setUsername("用户1");
+			user.setPassword("111111");
+			List<User> userList = mapper.getWithChoose(user);
+			Assert.assertNotNull(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 }
