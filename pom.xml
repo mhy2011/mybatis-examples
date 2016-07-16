@@ -67,5 +67,6 @@
 	</build>
 	<modules>
 		<module>mybatis-basic-examples</module>
+		<module>mybatis-generator-examples</module>
 	</modules>
 </project>
