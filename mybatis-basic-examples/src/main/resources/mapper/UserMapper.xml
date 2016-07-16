@@ -102,15 +102,4 @@
 		</where>
 	</select>
 	
-	<select id="getWithChoose" parameterType="com.mhy.model.User" resultMap="User">
-		SELECT <include refid="Column_List"/> FROM t_user 
-		<where>
-			<choose>
-				<when test="username != null"> username=#{username,jdbcType=VARCHAR}</when>
-				<when test="password != null"> password=#{password,jdbcType=INTEGER}</when>
-				<otherwise>login_times > 0</otherwise>
-			</choose>
-		</where>
-	</select>
-	
 </mapper>

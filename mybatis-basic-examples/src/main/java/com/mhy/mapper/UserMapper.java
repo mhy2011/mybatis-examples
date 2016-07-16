@@ -65,6 +65,4 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<User> getList(User user);
-	
-	List<User> getWithChoose(User user);
 }
