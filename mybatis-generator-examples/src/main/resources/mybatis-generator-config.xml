@@ -44,8 +44,13 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="t_user" domainObjectName="User">
-			<generatedKey column="id" sqlStatement="Mysql"/>
+		<table tableName="t_user" domainObjectName="User"
+			   enableSelectByExample="false"
+			   enableDeleteByExample="false"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+		>
+			<generatedKey column="id" sqlStatement="Mysql" identity="true"/>
 		</table>
 		
 	</context>
