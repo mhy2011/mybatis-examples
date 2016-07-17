@@ -14,7 +14,6 @@
 		   default-autowire="byName">
 
 	<context:component-scan base-package="com.mhy.service"></context:component-scan>
-	<context:component-scan base-package="com.mhy.dao"></context:component-scan>
 
 	<!-- C3P0数据源配置 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -44,13 +43,10 @@
 		<property name="mapperLocations" value="classpath*:mybatis/mapper/*.xml" />
 	</bean>
 
-	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.mhy.dao.UserMapper" />
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
-
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" />
+	<!-- 自动加载映射器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.mhy.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 	</bean>
 
 	<!-- 基于数据源的事务管理器 -->
