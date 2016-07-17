@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/tx
+		   http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/aop
+		   http://www.springframework.org/schema/aop/spring-aop.xsd" 
+		   default-autowire="byName">
+
+	<context:component-scan base-package="com.mhy.service"></context:component-scan>
+	<context:component-scan base-package="com.mhy.dao"></context:component-scan>
+
+	<!-- C3P0数据源配置 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mybatis-examples?useUnicode=true&amp;characterEncoding=utf-8"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="root"></property>
+
+		<property name="acquireIncrement" value="3" />
+		<!-- 指定数据库连接池的初始化连接数 -->
+		<property name="initialPoolSize" value="3" />
+		<!-- 指定数据库连接池的最小连接数 -->
+		<property name="minPoolSize" value="3" />
+		<!-- 指定数据库连接池的最大连接数 -->
+		<property name="maxPoolSize" value="50" />
+		<!-- 指定数据库连接池的连接的最大空闲时间 -->
+		<property name="maxIdleTime" value="600" />
+		<property name="idleConnectionTestPeriod" value="900" />
+		<property name="maxStatements" value="250" />
+		<property name="numHelperThreads" value="10" />
+	</bean>
+
+	<!-- 方式二 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:mybatis/mapper/*.xml" />
+	</bean>
+
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.mhy.dao.UserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 基于数据源的事务管理器 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="serviceMethod"
+			expression="execution(* com.mhy.service.*Service.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>
+
+	<!-- 事务增强 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- 事务属性定义 -->
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="add*"/>
+			<tx:method name="save*"/>
+			<tx:method name="update*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+</beans>
