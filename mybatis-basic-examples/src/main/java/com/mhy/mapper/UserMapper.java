@@ -6,6 +6,7 @@ package com.mhy.mapper;
 import java.util.List;
 
 import com.mhy.model.User;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户管理映射器
@@ -65,4 +66,21 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<User> getList(User user);
+
+	/**
+	 * 获取指定用户
+	 * @param username	用户名
+	 * @param password	密码
+     * @return
+     */
+	List<User> getUserList(String username, String password);
+
+
+	/**
+	 * 获取指定用户
+	 * @param username	用户名
+	 * @param password	密码
+	 * @return
+	 */
+	List<User> getUserList2(@Param("username") String username, @Param("password") String password);
 }

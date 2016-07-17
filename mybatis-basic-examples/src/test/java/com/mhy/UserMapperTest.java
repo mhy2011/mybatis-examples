@@ -200,4 +200,32 @@ public class UserMapperTest {
 			session.close();
 		}
 	}
+
+	@Test
+	public void testGetUserList(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			List<User> userList = mapper.getUserList("用户1", "111111");
+			Assert.assertNotNull(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+
+	@Test
+	public void testGetUserList2(){
+		SqlSession session = SqlSessionFactoryUtil.getSqlSessionFactory().openSession();	//打开Session
+		try {
+			UserMapper mapper = session.getMapper(UserMapper.class);
+			List<User> userList = mapper.getUserList2("用户1", "111111");
+			Assert.assertNotNull(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
 }
